@@ -1,5 +1,6 @@
 package com.sangeng.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -72,6 +73,8 @@ public class Article implements Serializable {
      */
     private Integer delFlag;
 
+    @TableField(exist = false)
+    private String categoryName;
 
     public Long getId() {
         return id;
