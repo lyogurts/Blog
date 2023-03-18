@@ -10,12 +10,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 @Autowired
 private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Autowired
+    AuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    AccessDeniedHandler accessDeniedHandler;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -36,6 +42,10 @@ private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
                 // 除上面外的所有请求全部不需要认证即可访问
                 .anyRequest().permitAll();
 
+        //配置异常处理器
+        http.exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler);
 
         http.logout().disable();
         //把jwtAuthenticationTokenFilter添加到SpringSecurity的过滤器链中
