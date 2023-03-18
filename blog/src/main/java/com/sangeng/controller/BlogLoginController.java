@@ -24,4 +24,9 @@ public class BlogLoginController {
         }
         return blogLoginService.login(user);
     }
+    //退出
+    @PostMapping("/logout")
+    public ResponseResult logout(){
+        return blogLoginService.logout();
+    }
 }
