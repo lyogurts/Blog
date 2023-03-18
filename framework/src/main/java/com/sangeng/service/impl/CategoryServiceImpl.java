@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sangeng.constants.SystemConstants;
 import com.sangeng.domain.entity.Article;
 import com.sangeng.domain.entity.Category;
-import com.sangeng.domain.entity.CategoryVo;
+import com.sangeng.domain.vo.CategoryVo;
 import com.sangeng.domain.entity.ResponseResult;
 import com.sangeng.mapper.CategoryMapper;
 import com.sangeng.service.ArticleService;
