@@ -1,6 +1,7 @@
 package com.sangeng.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sangeng.domain.entity.ResponseResult;
 import com.sangeng.domain.entity.User;
 
 
@@ -11,6 +12,8 @@ import com.sangeng.domain.entity.User;
  * @since 2023-03-18 22:06:55
  */
 public interface UserService extends IService<User> {
+
+    ResponseResult userInfo();
 
 }
 
