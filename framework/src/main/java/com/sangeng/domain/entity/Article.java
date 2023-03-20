@@ -76,6 +76,10 @@ public class Article implements Serializable {
     @TableField(exist = false)
     private String categoryName;
 
+    public Article(Long valueOf, long longValue) {
+
+    }
+
     public Long getId() {
         return id;
     }
