@@ -28,6 +28,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     RedisCache redisCache;
     @Override
+    /**
+     * 查询热门文章
+     */
     public ResponseResult hotArticleList() {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         //必须是正式文章
@@ -52,6 +55,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return ResponseResult.okResult(hotArticleVos);
     }
 
+
+    //前台根据分类id分页查询文章。
     @Override
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
         //查询条件
@@ -68,7 +73,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         page(page,lambdaQueryWrapper);
 
         List<Article> articles = page.getRecords();
-        //查询categoryName
+        //articleId去查询articleName进行设置
 //        articles.stream()
 //                .map(article -> article.setCategoryName(categoryService.getById(article.getCategoryId()).getName()))
 //                .collect(Collectors.toList());
@@ -86,6 +91,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return ResponseResult.okResult(pageVo);
     }
 
+
+    //文章详情查询
     @Override
     public ResponseResult getArticleDetail(Long id) {
         //根据id查询文章

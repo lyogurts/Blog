@@ -13,7 +13,7 @@ public class LinkController {
 
     @Autowired
     private LinkService linkService;
-
+    //查询友链
     @GetMapping("/getAllLink")
     public ResponseResult getAllLink(){
         return linkService.getAllLink();
