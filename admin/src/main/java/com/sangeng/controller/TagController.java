@@ -3,12 +3,15 @@ package com.sangeng.controller;
 import com.sangeng.domain.entity.ResponseResult;
 import com.sangeng.domain.vo.TagDto;
 import com.sangeng.domain.vo.TagListDto;
+import com.sangeng.domain.vo.TagVo;
 import com.sangeng.service.TagService;
 import io.swagger.annotations.ApiOperation;
 import kotlin.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class TagController {
@@ -42,5 +45,11 @@ public class TagController {
     @PutMapping("/content/tag")
     public ResponseResult updateByIdTag(@RequestBody TagDto tagDto){
         return tagService.updateByIdTag(tagDto);
+    }
+
+    @GetMapping("/content/tag/listAllTag")
+    public ResponseResult listAllTag(){
+        List<TagVo> list = tagService.listAllTag();
+        return ResponseResult.okResult(list);
     }
 }

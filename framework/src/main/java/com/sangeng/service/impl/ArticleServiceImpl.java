@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sangeng.constants.SystemConstants;
 import com.sangeng.domain.entity.*;
-import com.sangeng.domain.vo.ArticleDetailVo;
-import com.sangeng.domain.vo.ArticleListVo;
-import com.sangeng.domain.vo.HotArticleVo;
-import com.sangeng.domain.vo.PageVo;
+import com.sangeng.domain.vo.*;
 import com.sangeng.mapper.ArticleMapper;
 import com.sangeng.service.ArticleService;
 import com.sangeng.service.CategoryService;
@@ -16,13 +13,17 @@ import com.sangeng.utils.BeanCopyUtils;
 import com.sangeng.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
+    @Autowired
+    private ArticleTagServiceImpl articleTagService;
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -118,4 +119,36 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             redisCache.incrementCacheMapValue("article:viewCount",id.toString(),1);
         return ResponseResult.okResult();
     }
+
+//    @Override
+//    @Transactional
+//    public ResponseResult add(AddArticleDto articleDto) {
+//        //添加 博客
+//        Article article = BeanCopyUtils.copyBean(articleDto, Article.class);
+//        save(article);
+//
+//
+//        List<ArticleTag> articleTags = articleDto.getTags().stream()
+//                .map(tagId -> new ArticleTag(article.getId(), tagId))
+//                .collect(Collectors.toList());
+//
+//        //添加 博客和标签的关联
+//        articleTagService.saveBatch(articleTags);
+//        return ResponseResult.okResult();
+//    }
+@Override
+@Transactional
+public ResponseResult add(AddArticleDto articleDto) {
+    //添加 博客
+    Article article = BeanCopyUtils.copyBean(articleDto, Article.class);
+    save(article);
+
+
+    List<ArticleTag> articleTags = articleDto.getTags().stream()
+            .map(tagId -> new ArticleTag(article.getId(), tagId))
+            .collect(Collectors.toList());
+    //添加 博客和标签的关联
+    articleTagService.saveBatch(articleTags);
+    return ResponseResult.okResult();
+}
 }

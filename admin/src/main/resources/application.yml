@@ -22,3 +22,7 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto
   config-location:
+oss:
+  accessKey: 7vaxJbxeqqw3BjHb_1Q1HuvKIruyjMPhyD8MabWu
+  secretKey: IjHOn-Z1rp4Z1csiaGnZinRS6vHiGee1Ib0ME1xt
+  bucket: shiyangliblog

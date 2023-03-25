@@ -5,6 +5,9 @@ import com.sangeng.domain.entity.ResponseResult;
 import com.sangeng.domain.entity.Tag;
 import com.sangeng.domain.vo.TagDto;
 import com.sangeng.domain.vo.TagListDto;
+import com.sangeng.domain.vo.TagVo;
+
+import java.util.List;
 
 
 /**
@@ -25,5 +28,7 @@ public interface TagService extends IService<Tag> {
 
 
     ResponseResult updateByIdTag(TagDto tagDto);
+
+    List<TagVo> listAllTag();
 }
 
