@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("sg_tag")
 public class Tag {
     @TableId
-    private Long id;
+    private Integer id;
 
     //标签名
     private String name;

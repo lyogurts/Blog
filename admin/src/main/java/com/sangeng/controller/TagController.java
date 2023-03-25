@@ -1,6 +1,7 @@
 package com.sangeng.controller;
 
 import com.sangeng.domain.entity.ResponseResult;
+import com.sangeng.domain.vo.TagDto;
 import com.sangeng.domain.vo.TagListDto;
 import com.sangeng.service.TagService;
 import io.swagger.annotations.ApiOperation;
@@ -28,5 +29,18 @@ public class TagController {
     public ResponseResult addTag( @RequestBody TagListDto tag) {
         tagService.saveTag(tag);
         return ResponseResult.okResult();
+    }
+    @DeleteMapping("/content/tag/{id}")
+    public ResponseResult deleteTag( @PathVariable ("id") Integer  id){
+    tagService.deleteTag(id);
+    return ResponseResult.okResult();
+    }
+    @GetMapping("/content/tag/{id}")
+    public ResponseResult selectByIdTag(@PathVariable("id") Integer id){
+      return   tagService.getTagId(id);
+    }
+    @PutMapping("/content/tag")
+    public ResponseResult updateByIdTag(@RequestBody TagDto tagDto){
+        return tagService.updateByIdTag(tagDto);
     }
 }

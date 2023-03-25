@@ -7,14 +7,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sangeng.domain.entity.ResponseResult;
 import com.sangeng.domain.entity.Tag;
 import com.sangeng.domain.vo.PageVo;
+import com.sangeng.domain.vo.TagDto;
 import com.sangeng.domain.vo.TagListDto;
 import com.sangeng.mapper.TagMapper;
 import com.sangeng.service.TagService;
+import com.sangeng.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.Objects;
 
 /**
  * 标签(SgTag)表服务实现类
@@ -61,5 +61,40 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         baseMapper.insert(tag);
         return ResponseResult.okResult();
     }
+
+    @Override
+    public void deleteTag(Integer  id) {
+        tagMapper.deleteById(id);
+    }
+
+    @Override
+    public ResponseResult getTagId(Integer id) {
+        Tag tag = tagMapper.selectById(id);
+        TagDto tagDto = BeanCopyUtils.copyBean(tag, TagDto.class);
+        tagDto.setId(id);
+        return ResponseResult.okResult(tagDto);
+    }
+
+    @Override
+    public ResponseResult updateByIdTag(TagDto tagDto) {
+        //判断该标签名字是否占用
+        Tag selectOne = tagMapper.selectOne(
+                new LambdaQueryWrapper<Tag>()
+                        .select(Tag::getId)
+                        .eq(Tag::getName, tagDto.getName())
+        );
+        Assert.isNull(selectOne,tagDto.getName()+"名字已存在");
+        Tag tag = new Tag();
+        tag.setRemark(tagDto.getRemark());
+        tag.setName(tagDto.getName());
+        Integer id = tagDto.getId();
+        tag.setId(id);
+        tagMapper.updateById(tag);
+
+        //修改
+        //返回值
+        return ResponseResult.okResult(tag);
+    }
+
 }
 
