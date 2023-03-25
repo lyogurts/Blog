@@ -1,7 +1,9 @@
 package com.sangeng.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sangeng.domain.entity.ResponseResult;
 import com.sangeng.domain.entity.Tag;
+import com.sangeng.domain.vo.TagListDto;
 
 
 /**
@@ -12,5 +14,8 @@ import com.sangeng.domain.entity.Tag;
  */
 public interface TagService extends IService<Tag> {
 
+    ResponseResult pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
+
+    ResponseResult saveTag(TagListDto tagListDto);
 }
 
